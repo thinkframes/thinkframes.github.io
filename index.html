@@ -5,9 +5,6 @@
   <title>Thinkframes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Pageclip CSS (for the contact/comment form) -->
-  <link rel="stylesheet" href="https://s.pageclip.co/v1/pageclip.css" media="screen">
-
   <style>
     .top-header {
       background: #0f0f0f;
@@ -95,13 +92,13 @@
     }
 
     .hero {
-      padding: 60px 20px;
+      padding: 60px 20px 30px;
       text-align: center;
       background: white;
     }
 
     .section {
-      padding: 40px 20px;
+      padding: 30px 20px;
       max-width: 900px;
       margin: auto;
     }
@@ -128,6 +125,31 @@
       color: white;
       text-align: center;
       padding: 15px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .contact-form button {
+      padding: 10px 20px;
+      border-radius: 20px;
+      background: #111;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .contact-form button:hover {
+      opacity: 0.9;
     }
   </style>
 </head>
@@ -196,16 +218,18 @@
   <div class="card">
     <h2>Contact / Comment</h2>
 
-    <form action="https://send.pageclip.co/m1LSYo8RBU4160WHCyLZdvEk9f1PXen"
-          class="pageclip-form"
-          method="post">
+    <!-- Simple mailto-based comment/contact form (no API keys / no errors) -->
+    <form class="contact-form"
+          action="mailto:anugulan248@gmail.com"
+          method="post"
+          enctype="text/plain">
 
       <input type="text" name="name" placeholder="Your Name" required>
       <input type="email" name="email" placeholder="Your Email" required>
       <textarea name="message" placeholder="Write your comment or question here..." rows="4" required></textarea>
 
-      <button type="submit" class="pageclip-form__submit">
-        <span>Send</span>
+      <button type="submit">
+        Send
       </button>
     </form>
 
@@ -220,6 +244,7 @@
     </div>
   </div>
 </div>
+
 <div class="section">
   <div class="card">
     <h2>Latest Content</h2>
@@ -257,7 +282,5 @@
   <p>© 2025 Thinkframes | All Rights Reserved</p>
 </footer>
 
-<!-- Pageclip JS (must be before </body>) -->
-<script src="https://s.pageclip.co/v1/pageclip.js" charset="utf-8"></script>
 </body>
 </html>
