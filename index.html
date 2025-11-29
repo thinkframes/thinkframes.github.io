@@ -137,52 +137,84 @@
 
     footer{ text-align:center; padding:18px 12px; color:#6b7280; font-size:13px; }
 
-/* ===== Mobile header / nav fix ===== */
-@media (max-width: 600px) {
-  /* allow header to wrap but keep brand on left and nav on the right row */
-  .top-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 10px 12px;
-  }
+    /* ===== Mobile header / nav fix ===== */
+    @media (max-width: 600px) {
+      /* allow header to wrap but keep brand on left and nav on the right row */
+      .top-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 10px 12px;
+      }
 
-  /* keep brand left aligned */
-  .brand { flex: 0 0 auto; }
+      /* keep brand left aligned */
+      .brand { flex: 0 0 auto; }
 
-  /* make nav a single horizontal row that can scroll if too wide */
-  .main-nav {
-    display: flex;
-    gap: 10px;
-    flex: 1 1 auto;           /* take remaining space */
-    justify-content: flex-end;
-    overflow-x: auto;         /* allow horizontal scroll instead of wrapping */
-    -webkit-overflow-scrolling: touch;
-    white-space: nowrap;      /* keep items in one row */
-    padding-bottom: 6px;
-    margin: 0;
-  }
+      /* make nav a single horizontal row that can scroll if too wide */
+      .main-nav {
+        display: flex;
+        gap: 10px;
+        flex: 1 1 auto;           /* take remaining space */
+        justify-content: flex-end;
+        overflow-x: auto;         /* allow horizontal scroll instead of wrapping */
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;      /* keep items in one row */
+        padding-bottom: 6px;
+        margin: 0;
+      }
 
-  .main-nav a {
-    display: inline-block;
-    padding: 6px 6px;
-    font-size: 13px;
-    white-space: nowrap;      /* prevent internal wrapping of long link text */
-  }
+      .main-nav a {
+        display: inline-block;
+        padding: 6px 6px;
+        font-size: 13px;
+        white-space: nowrap;      /* prevent internal wrapping of long link text */
+      }
 
-  /* hide scroll bar visually on some browsers (optional, safe) */
-  .main-nav::-webkit-scrollbar { height: 6px; }
-  .main-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 10px; }
+      /* hide scroll bar visually on some browsers (optional, safe) */
+      .main-nav::-webkit-scrollbar { height: 6px; }
+      .main-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 10px; }
 
-  /* reduce hero top padding so header doesn't overlap */
-  .hero { padding-top: 18px; padding-bottom: 20px; }
+      /* reduce hero top padding so header doesn't overlap */
+      .hero { padding-top: 18px; padding-bottom: 20px; }
 
-  /* slightly tighten card/list spacing on smaller screens */
-  .card { padding: 12px; }
-  .light-list, .feature-list { padding-left: 10px; }
-  .light-list li, .feature-list li { font-size: 14px; padding: 6px 0; }
-}
+      /* slightly tighten card/list spacing on smaller screens */
+      .card { padding: 12px; }
+      .light-list, .feature-list { padding-left: 10px; }
+      .light-list li, .feature-list li { font-size: 14px; padding: 6px 0; }
+    }
+
+    /* ---------- Floating side ribbons (desktop only) ---------- */
+    .side-panel {
+      position: fixed;
+      top: 84px;
+      width: 220px;
+      max-height: calc(100vh - 110px);
+      overflow: auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 8px 30px rgba(10,10,10,0.08);
+      padding: 12px;
+      font-size: 14px;
+      z-index: 120;
+      transition: transform .18s ease, opacity .18s ease;
+    }
+    .side-panel.left { left: 18px; }
+    .side-panel.right { right: 18px; }
+    .side-panel h3 { margin: 0 0 10px 0; font-size:15px; font-weight:700; color:#111; }
+    .ribbons-toc { list-style: none; margin: 0; padding: 0; }
+    .ribbons-toc li { margin: 6px 0; }
+    .ribbons-toc a { color: #1565c0; text-decoration: none; display:inline-block; padding:4px 6px; border-radius:6px; }
+    .ribbons-toc a:hover { background:#f1f5f9; }
+    .appear-controls { display:grid; gap:8px; }
+    .appear-controls button, .appear-controls .toggle { padding:8px 10px; border-radius:8px; border:1px solid #e6e6e6; background:#fafafa; cursor:pointer; font-size:14px; }
+    .appear-controls .small { padding:6px 8px; font-size:13px; }
+    .appear-controls .row { display:flex; gap:8px; align-items:center; }
+
+    /* hide ribbons on small screens */
+    @media (max-width: 760px) {
+      .side-panel { display: none !important; }
+    }
 
     /* ---------- Larger screens (desktop/tablet) ---------- */
     @media (min-width: 768px){
@@ -196,216 +228,41 @@
       .card{ padding:18px; border-radius:14px; }
       .card h2{ font-size:20px; }
       .playlist-grid{ grid-template-columns: repeat(1, 1fr); }
-      /* if you want 2 columns on larger screens, change above line to:
-         grid-template-columns: repeat(2, 1fr); */
     }
   </style>
 </head>
 <body>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Thinkframes</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root{
-      --bg-dark: #0f0f0f;
-      --card-bg: #ffffff;
-      --text-main: #222222;
-      --text-soft: #555555;
-      --accent: #00b7ff;
-      --radius: 12px;
-      --shadow-soft: 0 6px 20px rgba(0,0,0,0.06);
-    }
 
-    /* ---------- Base / Mobile-first ---------- */
-    *{ box-sizing: border-box; }
-    body{
-      margin: 0;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: #f3f4f6;
-      color: var(--text-main);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      line-height: 1.45;
-    }
+  <!-- --- START: Floating ribbons --- -->
+  <aside class="side-panel left" id="ribbon-contents" aria-label="Table of contents">
+    <h3>Contents</h3>
+    <ul class="ribbons-toc" id="ribbons-toc"></ul>
+    <div style="margin-top:8px;font-size:12px;color:#666">Tip: click to jump.</div>
+  </aside>
 
-    /* Header */
-    .top-header{
-      background: var(--bg-dark);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .brand{ display:flex; align-items:center; gap:10px; }
-    .logo{ width:36px; height:36px; object-fit:contain; display:block; }
-    .brand-name{ color:#fff; font-weight:700; font-size:18px; letter-spacing:0.3px; }
-    .main-nav{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-    .main-nav a{ color:#ffffff; text-decoration:none; font-size:13px; opacity:0.95; }
-    .main-nav a:hover{ color:var(--accent); }
+  <aside class="side-panel right" id="ribbon-appearance" aria-label="Appearance controls">
+    <h3>Appearance</h3>
+    <div class="appear-controls">
+      <div class="row">
+        <div style="font-size:13px;color:#444;">Font</div>
+        <button id="font-decrease" class="small">A-</button>
+        <button id="font-reset" class="small">A</button>
+        <button id="font-increase" class="small">A+</button>
+      </div>
 
-    /* Hero */
-    .hero{
-      background: var(--bg-dark);
-      color: #fff;
-      text-align: center;
-      padding: 22px 14px;
-    }
-    .hero h2{ margin:0 0 8px; font-size:24px; font-weight:700; letter-spacing:0.2px; }
-    .hero p{ margin:0; color:#d1d5db; font-size:14px; }
+      <div class="row">
+        <div style="font-size:13px;color:#444;">Width</div>
+        <button id="width-normal" class="small">Normal</button>
+        <button id="width-wide" class="small">Wide</button>
+      </div>
 
-    /* Page container */
-    .page{ max-width:960px; margin: 0 auto; padding: 14px; }
-    .section{ margin-bottom: 16px; }
-
-    /* Card */
-    .card{
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      padding: 14px;
-      box-shadow: var(--shadow-soft);
-    }
-    .card h2{ margin:0 0 8px; font-size:18px; }
-    .card p, .card li{ font-size:15px; color:var(--text-soft); }
-
-    /* Playlists / Links grid */
-    .playlist-grid, .links-grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:8px;
-      margin-top:8px;
-    }
-    .playlist-grid a, .links-grid a{
-      display:block;
-      padding:10px 12px;
-      border-radius:10px;
-      background:#f7f7f7;
-      text-decoration:none;
-      color:var(--text-main);
-      font-size:14px;
-    }
-    .playlist-grid a:hover, .links-grid a:hover{ background:#ececec; }
-
-    /* Social links */
-    .social-links{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
-    .social-links a{
-      display:inline-block;
-      padding:8px 12px;
-      border-radius:999px;
-      background:#111;
-      color:white;
-      text-decoration:none;
-      font-size:13px;
-    }
-
-    /* Tidy list styles - aligned with paragraph text */
-    .light-list, .feature-list{
-      list-style: none;
-      padding-left: 12px;  /* aligns with paragraph text inside cards */
-      margin: 8px 0 0 0;
-    }
-    .light-list li, .feature-list li{
-      padding: 6px 0;
-      font-size: 15px;
-      color: #444;
-      line-height: 1.5;
-    }
-    .feature-list li{ border-bottom: 1px solid #eee; padding-bottom:10px; margin-bottom:10px; }
-
-    /* Contact form */
-    .contact-form input, .contact-form textarea{
-      width:100%;
-      padding:10px;
-      margin-bottom:10px;
-      border-radius:8px;
-      border:1px solid #ddd;
-      font-family: inherit;
-      font-size:14px;
-    }
-    .contact-form button{
-      padding:10px 16px;
-      border-radius:20px;
-      background:#111;
-      color:#fff;
-      border: none;
-      cursor:pointer;
-      font-size:14px;
-    }
-
-    iframe{ border-radius:8px; border:0; display:block; }
-
-    footer{ text-align:center; padding:18px 12px; color:#6b7280; font-size:13px; }
-
-/* ===== Mobile header / nav fix ===== */
-@media (max-width: 600px) {
-  /* allow header to wrap but keep brand on left and nav on the right row */
-  .top-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 10px 12px;
-  }
-
-  /* keep brand left aligned */
-  .brand { flex: 0 0 auto; }
-
-  /* make nav a single horizontal row that can scroll if too wide */
-  .main-nav {
-    display: flex;
-    gap: 10px;
-    flex: 1 1 auto;           /* take remaining space */
-    justify-content: flex-end;
-    overflow-x: auto;         /* allow horizontal scroll instead of wrapping */
-    -webkit-overflow-scrolling: touch;
-    white-space: nowrap;      /* keep items in one row */
-    padding-bottom: 6px;
-    margin: 0;
-  }
-
-  .main-nav a {
-    display: inline-block;
-    padding: 6px 6px;
-    font-size: 13px;
-    white-space: nowrap;      /* prevent internal wrapping of long link text */
-  }
-
-  /* hide scroll bar visually on some browsers (optional, safe) */
-  .main-nav::-webkit-scrollbar { height: 6px; }
-  .main-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 10px; }
-
-  /* reduce hero top padding so header doesn't overlap */
-  .hero { padding-top: 18px; padding-bottom: 20px; }
-
-  /* slightly tighten card/list spacing on smaller screens */
-  .card { padding: 12px; }
-  .light-list, .feature-list { padding-left: 10px; }
-  .light-list li, .feature-list li { font-size: 14px; padding: 6px 0; }
-}
-
-    /* ---------- Larger screens (desktop/tablet) ---------- */
-    @media (min-width: 768px){
-      .top-header{ padding:14px 22px; }
-      .logo{ width:40px; height:40px; }
-      .brand-name{ font-size:20px; }
-      .hero{ padding:36px 18px; }
-      .hero h2{ font-size:34px; }
-      .hero p{ font-size:16px; }
-      .page{ padding: 18px; }
-      .card{ padding:18px; border-radius:14px; }
-      .card h2{ font-size:20px; }
-      .playlist-grid{ grid-template-columns: repeat(1, 1fr); }
-      /* if you want 2 columns on larger screens, change above line to:
-         grid-template-columns: repeat(2, 1fr); */
-    }
-  </style>
-</head>
-<body>
+      <div class="row">
+        <div style="font-size:13px;color:#444;">Theme</div>
+        <button id="theme-toggle" class="small">Toggle Light/Dark</button>
+      </div>
+    </div>
+  </aside>
+  <!-- --- END: Floating ribbons --- -->
 
   <header class="top-header">
     <div class="brand">
@@ -547,238 +404,97 @@
   <footer>
     <p>© 2025 Thinkframes | All Rights Reserved</p>
   </footer>
-</body>
-</html>
-  <header class="top-header">
-    <div class="brand">
-      <a href="https://thinkframes.github.io/" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-        <img src="logo transparent.png" alt="Thinkframes Logo" class="logo" />
-        <span class="brand-name">Thinkframes</span>
-      </a>
-    </div>
 
-    <nav class="main-nav" aria-label="Main Navigation">
-      <a href="#about">About</a>
-      <a href="#content">Content</a>
-      <a href="#playlists">Playlists</a>
-      <a href="#links">Links</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
-
-  <div class="hero" role="banner">
-    <div class="page">
-      <h2>Welcome to Thinkframes</h2>
-      <p>A place for intelligent ideas, learning, and creative content.</p>
-    </div>
-  </div>
-
-  <main class="page" role="main">
-    <section id="about" class="section">
-      <div class="card">
-        <h2>About Thinkframes</h2>
-        <p>Thinkframes is a knowledge platform focused on:</p>
-        <ul class="light-list">
-          <li>Clear explanations</li>
-          <li>Creative thinking</li>
-          <li>Educational content</li>
-          <li>Science & real-world topics</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="content" class="section">
-      <div class="card">
-        <h2>What You Will Find Here</h2>
-        <ul class="feature-list">
-          <li>📘 Simple educational explainers</li>
-          <li>🧠 Logical & critical thinking topics</li>
-          <li>🔬 Science & technology insights</li>
-          <li>🎥 Curated YouTube playlists</li>
-          <li>✅ Practical problem-solving guides</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="playlists" class="section">
-      <div class="card">
-        <h2>YouTube Playlists</h2>
-        <p>Explore all my main playlists from the Thinkframes YouTube channel:</p>
-
-        <div class="playlist-grid">
-          <a href="https://youtube.com/playlist?list=PL_Rg7C44GQjB6cXoZqG9g4fppwc_y3Hxk&si=Hy8Np6ypcdPRPj-M" target="_blank" rel="noopener">Playlist 1 – Health Facts in Daily Life</a>
-          <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjDYrp9I98AF_Tlk9pwqyU3e" target="_blank" rel="noopener">Playlist 2 – Divine Wisdom Telugu 🔱 Mahabharata & Dharma Truths</a>
-          <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjBzxgunengyRe-LiCtpvSme" target="_blank" rel="noopener">Playlist 3 – Biology Explained</a>
-          <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjBSVG0Sx52vtIPOnSjI7qHy" target="_blank" rel="noopener">Playlist 4 – Science & Facts Hub | Telugu Shorts</a>
-          <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjAsatZYhQDPDHp0uL4aNwrI" target="_blank" rel="noopener">Playlist 5 – PC Solutions Hub | Windows Tips & Fixes</a>
-          <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjBe-EdTF6B1rLk0hsEZNBaK" target="_blank" rel="noopener">Playlist 6 – Nokia Nostalgia | Symbian Era Memories</a>
-          <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjBYdIi0POwibPBsHLnvo0EX" target="_blank" rel="noopener">Playlist 7 – Mobile Solutions Hub | Android Fix & Tutorials</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="links" class="section">
-      <div class="card">
-        <h2>Links & Contacts</h2>
-        <p>Quick links and social channels:</p>
-        <p style="margin:8px 0;">
-          <a href="mailto:anugulan248@gmail.com">anugulan248@gmail.com</a><br>
-          <a href="https://www.youtube.com/@think_frames" target="_blank" rel="noopener">YouTube: Thinkframes Channel</a>
-        </p>
-
-        <div class="social-links">
-          <a href="https://www.youtube.com/@think_frames" target="_blank" rel="noopener">YouTube</a>
-          <a href="https://www.facebook.com/profile.php?id=100071146036313" target="_blank" rel="noopener">Facebook</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="section">
-      <div class="card">
-        <h2>Contact / Comment</h2>
-
-        <form class="contact-form"
-              action="mailto:anugulan248@gmail.com"
-              method="post"
-              enctype="text/plain">
-          <input type="text" name="name" placeholder="Your Name" required>
-          <input type="email" name="email" placeholder="Your Email" required>
-          <textarea name="message" placeholder="Write your comment or question here..." rows="4" required></textarea>
-          <button type="submit">Send</button>
-        </form>
-
-        <hr style="margin:14px 0;border:none;border-top:1px solid #eee;">
-        <p style="margin:0 0 6px;">Email: <a href="mailto:anugulan248@gmail.com">anugulan248@gmail.com</a></p>
-        <p style="margin:0 0 6px;">YouTube: <a href="https://www.youtube.com/@think_frames" target="_blank" rel="noopener">Thinkframes Channel</a></p>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="card">
-        <h2>Latest Content</h2>
-        <p style="margin:0;">
-          🔹 <a href="https://youtube.com/shorts/oDlvh82kf7Q?feature=share" target="_blank" rel="noopener">
-            Curry + Rice = Only 10g Protein?! 😱 India lo Protein Deficiency Explained
-          </a><br><br>
-
-          🔹 <a href="https://youtube.com/shorts/oFJ3JSh624c?feature=share" target="_blank" rel="noopener">
-            ఎంత తిన్నా బలం రావట్లేదా? 😟 Hidden Deficiency Explained in 40 Seconds!
-          </a><br><br>
-
-          🔹 <a href="https://youtube.com/shorts/lmnPhhvuoJ8?feature=share" target="_blank" rel="noopener">
-            They Lied About Draupadi 😡 (REAL Mahabharata Facts)
-          </a>
-        </p>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="card">
-        <h2>Latest Videos</h2>
-        <iframe width="100%" height="315"
-          src="https://www.youtube.com/embed/AfK-kFzEaIs?si=ROu9FrzsKOoTwGEj"
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen>
-        </iframe>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2025 Thinkframes | All Rights Reserved</p>
-  </footer>
   <script>
-/* ======= Build a simple TOC from H2 headings in <main> ======= */
-(function buildTOC(){
-  const tocRoot = document.getElementById('ribbons-toc');
-  if(!tocRoot) return;
-  // collect h2s inside main
-  const headings = Array.from(document.querySelectorAll('main h2'));
-  if(!headings.length) {
-    tocRoot.innerHTML = '<li style="color:#666;font-size:13px">No sections found</li>';
-    return;
-  }
-  headings.forEach(h=>{
-    // ensure id exists
-    if(!h.id) {
-      h.id = h.textContent.trim().toLowerCase().replace(/[^\w\- ]+/g,'').replace(/\s+/g,'-');
+  /* ======= Build a simple TOC from H2 headings in <main> ======= */
+  (function buildTOC(){
+    const tocRoot = document.getElementById('ribbons-toc');
+    if(!tocRoot) return;
+    // collect h2s inside main
+    const headings = Array.from(document.querySelectorAll('main h2'));
+    if(!headings.length) {
+      tocRoot.innerHTML = '<li style="color:#666;font-size:13px">No sections found</li>';
+      return;
     }
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.href = '#'+h.id;
-    a.textContent = h.textContent;
-    a.addEventListener('click', function(e){
-      // smooth scroll with a little offset for sticky header
-      e.preventDefault();
-      const top = document.getElementById(h.id).getBoundingClientRect().top + window.scrollY - 70;
-      window.scrollTo({top, behavior:'smooth'});
-      history.replaceState && history.replaceState(null, '', '#'+h.id);
+    headings.forEach(h=>{
+      // ensure id exists
+      if(!h.id) {
+        h.id = h.textContent.trim().toLowerCase().replace(/[^\w\- ]+/g,'').replace(/\s+/g,'-');
+      }
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = '#'+h.id;
+      a.textContent = h.textContent;
+      a.addEventListener('click', function(e){
+        // smooth scroll with a little offset for sticky header
+        e.preventDefault();
+        const top = document.getElementById(h.id).getBoundingClientRect().top + window.scrollY - 70;
+        window.scrollTo({top, behavior:'smooth'});
+        history.replaceState && history.replaceState(null, '', '#'+h.id);
+      });
+      li.appendChild(a);
+      tocRoot.appendChild(li);
     });
-    li.appendChild(a);
-    tocRoot.appendChild(li);
-  });
-})();
+  })();
 
-/* ======= Appearance controls (font size, width, theme) ======= */
-(function appearanceControls(){
-  const page = document.querySelector('.page');
-  if(!page) return;
+  /* ======= Appearance controls (font size, width, theme) ======= */
+  (function appearanceControls(){
+    const page = document.querySelector('.page');
+    if(!page) return;
 
-  const FONT_KEY = 'tf_font_size';
-  const WIDTH_KEY = 'tf_width_mode';
-  const THEME_KEY = 'tf_theme';
+    const FONT_KEY = 'tf_font_size';
+    const WIDTH_KEY = 'tf_width_mode';
+    const THEME_KEY = 'tf_theme';
 
-  // helpers
-  const setFont = (size)=> { page.style.fontSize = size + 'px'; localStorage.setItem(FONT_KEY, size); };
-  const setWidth = (mode)=> {
-    if(mode === 'wide') page.style.maxWidth = '1100px';
-    else page.style.maxWidth = '960px';
-    localStorage.setItem(WIDTH_KEY, mode);
-  };
-  const setTheme = (mode)=> {
-    if(mode === 'dark') {
-      document.documentElement.style.background = '#0b0b0b';
-      document.documentElement.style.color = '#eee';
-      document.querySelectorAll('.card').forEach(c=> c.style.background = '#0f1113');
-      localStorage.setItem(THEME_KEY,'dark');
-    } else {
-      document.documentElement.style.background = '';
-      document.documentElement.style.color = '';
-      document.querySelectorAll('.card').forEach(c=> c.style.background = '');
-      localStorage.setItem(THEME_KEY,'light');
-    }
-  };
+    // helpers
+    const setFont = (size)=> { page.style.fontSize = size + 'px'; localStorage.setItem(FONT_KEY, size); };
+    const setWidth = (mode)=> {
+      if(mode === 'wide') page.style.maxWidth = '1100px';
+      else page.style.maxWidth = '960px';
+      localStorage.setItem(WIDTH_KEY, mode);
+    };
+    const setTheme = (mode)=> {
+      if(mode === 'dark') {
+        document.documentElement.style.background = '#0b0b0b';
+        document.documentElement.style.color = '#eee';
+        document.querySelectorAll('.card').forEach(c=> c.style.background = '#0f1113');
+        localStorage.setItem(THEME_KEY,'dark');
+      } else {
+        document.documentElement.style.background = '';
+        document.documentElement.style.color = '';
+        document.querySelectorAll('.card').forEach(c=> c.style.background = '');
+        localStorage.setItem(THEME_KEY,'light');
+      }
+    };
 
-  // restore saved
-  const savedFont = parseInt(localStorage.getItem(FONT_KEY) || '0',10);
-  if(savedFont) setFont(savedFont);
-  const savedWidth = localStorage.getItem(WIDTH_KEY) || 'normal';
-  setWidth(savedWidth === 'wide' ? 'wide' : 'normal');
-  const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
-  setTheme(savedTheme);
+    // restore saved
+    const savedFont = parseInt(localStorage.getItem(FONT_KEY) || '0',10);
+    if(savedFont) setFont(savedFont);
+    const savedWidth = localStorage.getItem(WIDTH_KEY) || 'normal';
+    setWidth(savedWidth === 'wide' ? 'wide' : 'normal');
+    const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
+    setTheme(savedTheme);
 
-  // wire buttons
-  document.getElementById('font-increase').addEventListener('click', ()=> {
-    const cur = parseInt(getComputedStyle(page).fontSize) || 15;
-    const next = Math.min(cur+1, 20); setFont(next);
-  });
-  document.getElementById('font-decrease').addEventListener('click', ()=> {
-    const cur = parseInt(getComputedStyle(page).fontSize) || 15;
-    const next = Math.max(cur-1, 12); setFont(next);
-  });
-  document.getElementById('font-reset').addEventListener('click', ()=> { setFont(15); });
+    // wire buttons
+    document.getElementById('font-increase').addEventListener('click', ()=> {
+      const cur = parseInt(getComputedStyle(page).fontSize) || 15;
+      const next = Math.min(cur+1, 20); setFont(next);
+    });
+    document.getElementById('font-decrease').addEventListener('click', ()=> {
+      const cur = parseInt(getComputedStyle(page).fontSize) || 15;
+      const next = Math.max(cur-1, 12); setFont(next);
+    });
+    document.getElementById('font-reset').addEventListener('click', ()=> { setFont(15); });
 
-  document.getElementById('width-normal').addEventListener('click', ()=> setWidth('normal'));
-  document.getElementById('width-wide').addEventListener('click', ()=> setWidth('wide'));
+    document.getElementById('width-normal').addEventListener('click', ()=> setWidth('normal'));
+    document.getElementById('width-wide').addEventListener('click', ()=> setWidth('wide'));
 
-  document.getElementById('theme-toggle').addEventListener('click', ()=> {
-    const cur = localStorage.getItem(THEME_KEY) || 'light';
-    setTheme(cur === 'light' ? 'dark' : 'light');
-  });
-})();
-</script>
+    document.getElementById('theme-toggle').addEventListener('click', ()=> {
+      const cur = localStorage.getItem(THEME_KEY) || 'light';
+      setTheme(cur === 'light' ? 'dark' : 'light');
+    });
+  })();
+  </script>
 
 </body>
 </html>
