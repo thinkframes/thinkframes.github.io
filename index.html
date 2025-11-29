@@ -139,7 +139,6 @@
 
     /* ===== Mobile header / nav fix ===== */
     @media (max-width: 600px) {
-      /* allow header to wrap but keep brand on left and nav on the right row */
       .top-header {
         display: flex;
         align-items: center;
@@ -147,38 +146,27 @@
         gap: 8px;
         padding: 10px 12px;
       }
-
-      /* keep brand left aligned */
       .brand { flex: 0 0 auto; }
-
-      /* make nav a single horizontal row that can scroll if too wide */
       .main-nav {
         display: flex;
         gap: 10px;
-        flex: 1 1 auto;           /* take remaining space */
+        flex: 1 1 auto;
         justify-content: flex-end;
-        overflow-x: auto;         /* allow horizontal scroll instead of wrapping */
+        overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        white-space: nowrap;      /* keep items in one row */
+        white-space: nowrap;
         padding-bottom: 6px;
         margin: 0;
       }
-
       .main-nav a {
         display: inline-block;
         padding: 6px 6px;
         font-size: 13px;
-        white-space: nowrap;      /* prevent internal wrapping of long link text */
+        white-space: nowrap;
       }
-
-      /* hide scroll bar visually on some browsers (optional, safe) */
       .main-nav::-webkit-scrollbar { height: 6px; }
       .main-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 10px; }
-
-      /* reduce hero top padding so header doesn't overlap */
       .hero { padding-top: 18px; padding-bottom: 20px; }
-
-      /* slightly tighten card/list spacing on smaller screens */
       .card { padding: 12px; }
       .light-list, .feature-list { padding-left: 10px; }
       .light-list li, .feature-list li { font-size: 14px; padding: 6px 0; }
@@ -437,94 +425,91 @@
     });
   })();
 
-  /* ======= Appearance controls (font size, width, theme) ======= */
-  <script>
-/* ======= Improved Appearance controls (font size, width, theme) ======= */
-(function appearanceControls(){
-  // Prefer the main content area. Fallback to any .page containers.
-  const mainContent = document.querySelector('main') || document.querySelector('.page');
-  const pageContainers = document.querySelectorAll('.page'); // for width changes
+  /* ======= Improved Appearance controls (font size, width, theme) ======= */
+  (function appearanceControls(){
+    // Prefer the main content area. Fallback to any .page containers.
+    const pageContainers = document.querySelectorAll('.page');
+    const mainContent = document.querySelector('main') || pageContainers[0];
+    if(!mainContent) return;
 
-  if(!mainContent) return;
+    const FONT_KEY = 'tf_font_size';
+    const WIDTH_KEY = 'tf_width_mode';
+    const THEME_KEY = 'tf_theme';
 
-  const FONT_KEY = 'tf_font_size';
-  const WIDTH_KEY = 'tf_width_mode';
-  const THEME_KEY = 'tf_theme';
+    // helpers
+    const setFont = (size)=> {
+      // apply font size to root so it affects all text consistently
+      document.documentElement.style.fontSize = size + 'px';
+      localStorage.setItem(FONT_KEY, size);
+    };
 
-  // helpers
-  const setFont = (size)=> {
-    // apply font size to root so it affects all text consistently
-    document.documentElement.style.fontSize = size + 'px';
-    localStorage.setItem(FONT_KEY, size);
-  };
+    const setWidth = (mode)=> {
+      // set maxWidth on all page containers so layout updates correctly
+      pageContainers.forEach(p => {
+        if(mode === 'wide') p.style.maxWidth = '1100px';
+        else p.style.maxWidth = '960px';
+      });
+      localStorage.setItem(WIDTH_KEY, mode);
+    };
 
-  const setWidth = (mode)=> {
-    // set maxWidth on all page containers so layout updates correctly
-    pageContainers.forEach(p => {
-      if(mode === 'wide') p.style.maxWidth = '1100px';
-      else p.style.maxWidth = '960px';
+    const setTheme = (mode)=> {
+      if(mode === 'dark') {
+        document.documentElement.style.background = '#0b0b0b';
+        document.documentElement.style.color = '#eee';
+        document.querySelectorAll('.card').forEach(c=> c.style.background = '#0f1113');
+        localStorage.setItem(THEME_KEY,'dark');
+      } else {
+        document.documentElement.style.background = '';
+        document.documentElement.style.color = '';
+        document.querySelectorAll('.card').forEach(c=> c.style.background = '');
+        localStorage.setItem(THEME_KEY,'light');
+      }
+    };
+
+    // restore saved values (with sensible defaults)
+    const savedFont = parseInt(localStorage.getItem(FONT_KEY) || '0',10);
+    if(savedFont && !isNaN(savedFont)) setFont(savedFont);
+    else setFont(15); // default base font size
+
+    const savedWidth = localStorage.getItem(WIDTH_KEY) || 'normal';
+    setWidth(savedWidth === 'wide' ? 'wide' : 'normal');
+
+    const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
+    setTheme(savedTheme);
+
+    // wire buttons (guard each in case missing)
+    const byId = id => document.getElementById(id);
+
+    const incBtn = byId('font-increase');
+    const decBtn = byId('font-decrease');
+    const resetBtn = byId('font-reset');
+    const wideBtn = byId('width-wide');
+    const normalBtn = byId('width-normal');
+    const themeBtn = byId('theme-toggle');
+
+    if(incBtn) incBtn.addEventListener('click', ()=> {
+      const cur = parseInt(getComputedStyle(document.documentElement).fontSize) || 15;
+      const next = Math.min(cur+1, 20);
+      setFont(next);
     });
-    localStorage.setItem(WIDTH_KEY, mode);
-  };
 
-  const setTheme = (mode)=> {
-    if(mode === 'dark') {
-      document.documentElement.style.background = '#0b0b0b';
-      document.documentElement.style.color = '#eee';
-      document.querySelectorAll('.card').forEach(c=> c.style.background = '#0f1113');
-      localStorage.setItem(THEME_KEY,'dark');
-    } else {
-      document.documentElement.style.background = '';
-      document.documentElement.style.color = '';
-      document.querySelectorAll('.card').forEach(c=> c.style.background = '');
-      localStorage.setItem(THEME_KEY,'light');
-    }
-  };
+    if(decBtn) decBtn.addEventListener('click', ()=> {
+      const cur = parseInt(getComputedStyle(document.documentElement).fontSize) || 15;
+      const next = Math.max(cur-1, 12);
+      setFont(next);
+    });
 
-  // restore saved values (with sensible defaults)
-  const savedFont = parseInt(localStorage.getItem(FONT_KEY) || '0',10);
-  if(savedFont && !isNaN(savedFont)) setFont(savedFont);
-  else setFont(15); // default base font size
+    if(resetBtn) resetBtn.addEventListener('click', ()=> { setFont(15); });
 
-  const savedWidth = localStorage.getItem(WIDTH_KEY) || 'normal';
-  setWidth(savedWidth === 'wide' ? 'wide' : 'normal');
+    if(normalBtn) normalBtn.addEventListener('click', ()=> setWidth('normal'));
+    if(wideBtn) wideBtn.addEventListener('click', ()=> setWidth('wide'));
 
-  const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
-  setTheme(savedTheme);
+    if(themeBtn) themeBtn.addEventListener('click', ()=> {
+      const cur = localStorage.getItem(THEME_KEY) || 'light';
+      setTheme(cur === 'light' ? 'dark' : 'light');
+    });
+  })();
+  </script>
 
-  // wire buttons (guard each in case missing)
-  const byId = id => document.getElementById(id);
-
-  const incBtn = byId('font-increase');
-  const decBtn = byId('font-decrease');
-  const resetBtn = byId('font-reset');
-  const wideBtn = byId('width-wide');
-  const normalBtn = byId('width-normal');
-  const themeBtn = byId('theme-toggle');
-
-  if(incBtn) incBtn.addEventListener('click', ()=> {
-    const cur = parseInt(getComputedStyle(document.documentElement).fontSize) || 15;
-    const next = Math.min(cur+1, 20);
-    setFont(next);
-  });
-
-  if(decBtn) decBtn.addEventListener('click', ()=> {
-    const cur = parseInt(getComputedStyle(document.documentElement).fontSize) || 15;
-    const next = Math.max(cur-1, 12);
-    setFont(next);
-  });
-
-  if(resetBtn) resetBtn.addEventListener('click', ()=> { setFont(15); });
-
-  if(normalBtn) normalBtn.addEventListener('click', ()=> setWidth('normal'));
-  if(wideBtn) wideBtn.addEventListener('click', ()=> setWidth('wide'));
-
-  if(themeBtn) themeBtn.addEventListener('click', ()=> {
-    const cur = localStorage.getItem(THEME_KEY) || 'light';
-    setTheme(cur === 'light' ? 'dark' : 'light');
-  });
-})();
-</script>
-  
 </body>
 </html>
