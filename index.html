@@ -93,6 +93,23 @@
       color: var(--text-main);
       font-size: 14px;
     }
+    
+.light-list,
+.feature-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.light-list li,
+.feature-list li {
+  padding: 6px 0;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.feature-list li {
+  border-bottom: 1px solid #eee;
+}
 
     .playlist-grid a:hover,
     .links-grid a:hover {
@@ -287,28 +304,33 @@
   <p>A place for intelligent ideas, learning, and creative content.</p>
 </div>
 
-<div class="section" id="about">
+<section id="about" class="section">
   <div class="card">
     <h2>About Thinkframes</h2>
     <p>
-      Thinkframes is a platform dedicated to knowledge sharing, creative thinking,
-      educational content, and smart explanations in science, technology, and real-world topics.
+      Thinkframes is a knowledge platform focused on:
     </p>
-  </div>
-</div>
-
-<div class="section" id="content">
-  <div class="card">
-    <h2>What You Will Find Here</h2>
-    <ul>
-      <li>Educational explanations</li>
-      <li>Science & technology videos</li>
-      <li>Thought-provoking content</li>
-      <li>Problem-solving guides</li>
+    <ul class="light-list">
+      <li>Clear explanations</li>
+      <li>Creative thinking</li>
+      <li>Educational content</li>
+      <li>Science & real-world topics</li>
     </ul>
   </div>
-</div>
+</section>
 
+<section id="content" class="section">
+  <div class="card">
+    <h2>What You Will Find Here</h2>
+    <ul class="feature-list">
+      <li>📘 Simple educational explainers</li>
+      <li>🧠 Logical & critical thinking topics</li>
+      <li>🔬 Science & technology insights</li>
+      <li>🎥 Curated YouTube playlists</li>
+      <li>✅ Practical problem-solving guides</li>
+    </ul>
+  </div>
+</section>
 <div class="section" id="playlists">
   <div class="card">
     <h2>YouTube Playlists</h2>
