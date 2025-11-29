@@ -137,6 +137,53 @@
 
     footer{ text-align:center; padding:18px 12px; color:#6b7280; font-size:13px; }
 
+/* ===== Mobile header / nav fix ===== */
+@media (max-width: 600px) {
+  /* allow header to wrap but keep brand on left and nav on the right row */
+  .top-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  /* keep brand left aligned */
+  .brand { flex: 0 0 auto; }
+
+  /* make nav a single horizontal row that can scroll if too wide */
+  .main-nav {
+    display: flex;
+    gap: 10px;
+    flex: 1 1 auto;           /* take remaining space */
+    justify-content: flex-end;
+    overflow-x: auto;         /* allow horizontal scroll instead of wrapping */
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;      /* keep items in one row */
+    padding-bottom: 6px;
+    margin: 0;
+  }
+
+  .main-nav a {
+    display: inline-block;
+    padding: 6px 6px;
+    font-size: 13px;
+    white-space: nowrap;      /* prevent internal wrapping of long link text */
+  }
+
+  /* hide scroll bar visually on some browsers (optional, safe) */
+  .main-nav::-webkit-scrollbar { height: 6px; }
+  .main-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 10px; }
+
+  /* reduce hero top padding so header doesn't overlap */
+  .hero { padding-top: 18px; padding-bottom: 20px; }
+
+  /* slightly tighten card/list spacing on smaller screens */
+  .card { padding: 12px; }
+  .light-list, .feature-list { padding-left: 10px; }
+  .light-list li, .feature-list li { font-size: 14px; padding: 6px 0; }
+}
+
     /* ---------- Larger screens (desktop/tablet) ---------- */
     @media (min-width: 768px){
       .top-header{ padding:14px 22px; }
