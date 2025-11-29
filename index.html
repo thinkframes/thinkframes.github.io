@@ -1,426 +1,300 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Thinkframes</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root {
+    :root{
       --bg-dark: #0f0f0f;
       --card-bg: #ffffff;
       --text-main: #222222;
       --text-soft: #555555;
       --accent: #00b7ff;
-      --radius: 10px;
-      --shadow-soft: 0 2px 8px rgba(0,0,0,0.06);
+      --radius: 12px;
+      --shadow-soft: 0 6px 20px rgba(0,0,0,0.06);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
+    /* ---------- Base / Mobile-first ---------- */
+    *{ box-sizing: border-box; }
+    body{
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       background: #f3f4f6;
       color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.45;
     }
 
-    .top-header {
+    /* Header */
+    .top-header{
       background: var(--bg-dark);
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 10px 20px;
+      justify-content: space-between;
+      padding: 10px 14px;
       position: sticky;
       top: 0;
       z-index: 100;
     }
+    .brand{ display:flex; align-items:center; gap:10px; }
+    .logo{ width:36px; height:36px; object-fit:contain; display:block; }
+    .brand-name{ color:#fff; font-weight:700; font-size:18px; letter-spacing:0.3px; }
+    .main-nav{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .main-nav a{ color:#ffffff; text-decoration:none; font-size:13px; opacity:0.95; }
+    .main-nav a:hover{ color:var(--accent); }
 
-    .playlist-grid,
-    .links-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo {
-      width: 40px;
-      height: 40px;
-      object-fit: contain;
-    }
-
-    .brand-name {
-      color: #ffffff;
-      font-size: 20px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    .main-nav {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 12px;
-    }
-
-    .main-nav a {
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .main-nav a:hover {
-      color: var(--accent);
-    }
-
-    .playlist-grid a,
-    .links-grid a {
-      display: block;
-      padding: 8px 12px;
-      border-radius: 8px;
-      background: #f7f7f7;
-      text-decoration: none;
-      color: var(--text-main);
-      font-size: 14px;
-    }
-    
-/* tidy list styles - keeps lists aligned with paragraph text */
-.light-list,
-.feature-list {
-  list-style: none;      /* no default bullets */
-  padding-left: 12px;    /* align with paragraph text inside card */
-  margin: 0;             /* remove default top/bottom margin */
-}
-
-.light-list li,
-.feature-list li {
-  padding: 6px 0;
-  font-size: 0.95rem;
-  color: #444;
-  line-height: 1.5;
-}
-
-.feature-list li {
-  border-bottom: 1px solid #eee;
-}
-
-/* ---------- BIGGER SCREENS ---------- */
-@media (min-width: 768px) {
-
-    .playlist-grid a:hover,
-    .links-grid a:hover {
-      background: #e5e5e5;
-    }
-
-    .social-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .social-links a {
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: #111;
-      color: white;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    .social-links a:hover {
-      opacity: 0.85;
-    }
-
-    .hero {
-      padding: 26px 16px;
-      text-align: center;
+    /* Hero */
+    .hero{
       background: var(--bg-dark);
-      color: white;
+      color: #fff;
+      text-align: center;
+      padding: 22px 14px;
     }
+    .hero h2{ margin:0 0 8px; font-size:24px; font-weight:700; letter-spacing:0.2px; }
+    .hero p{ margin:0; color:#d1d5db; font-size:14px; }
 
-    .hero h2 {
-      letter-spacing: 1px;
-      color: #ffffff;
-      font-size: 26px;
-      margin: 0 0 8px;
-    }
+    /* Page container */
+    .page{ max-width:960px; margin: 0 auto; padding: 14px; }
+    .section{ margin-bottom: 16px; }
 
-    .hero p {
-      color: #cccccc;
-      font-size: 15px;
-      margin: 0;
-    }
-
-    .section {
-      padding: 20px 16px;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .card {
+    /* Card */
+    .card{
       background: var(--card-bg);
-      padding: 14px;
       border-radius: var(--radius);
+      padding: 14px;
       box-shadow: var(--shadow-soft);
     }
+    .card h2{ margin:0 0 8px; font-size:18px; }
+    .card p, .card li{ font-size:15px; color:var(--text-soft); }
 
-    .card h2 {
-      margin-top: 0;
-      margin-bottom: 8px;
-      font-size: 20px;
+    /* Playlists / Links grid */
+    .playlist-grid, .links-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:8px;
+      margin-top:8px;
+    }
+    .playlist-grid a, .links-grid a{
+      display:block;
+      padding:10px 12px;
+      border-radius:10px;
+      background:#f7f7f7;
+      text-decoration:none;
+      color:var(--text-main);
+      font-size:14px;
+    }
+    .playlist-grid a:hover, .links-grid a:hover{ background:#ececec; }
+
+    /* Social links */
+    .social-links{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+    .social-links a{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      background:#111;
+      color:white;
+      text-decoration:none;
+      font-size:13px;
     }
 
-    .card p,
-    .card li {
-      font-size: 14px;
-      line-height: 1.6;
-      color: var(--text-soft);
+    /* Tidy list styles - aligned with paragraph text */
+    .light-list, .feature-list{
+      list-style: none;
+      padding-left: 12px;  /* aligns with paragraph text inside cards */
+      margin: 8px 0 0 0;
     }
-
-    .card a {
-      color: #1565c0;
-      text-decoration: none;
-      font-weight: 500;
+    .light-list li, .feature-list li{
+      padding: 6px 0;
+      font-size: 15px;
+      color: #444;
+      line-height: 1.5;
     }
+    .feature-list li{ border-bottom: 1px solid #eee; padding-bottom:10px; margin-bottom:10px; }
 
-    .card a:hover {
-      text-decoration: underline;
-    }
-
-    footer {
-      background: #111;
-      color: white;
-      text-align: center;
-      padding: 14px;
-      font-size: 13px;
-    }
-
-    .contact-form input,
-    .contact-form textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+    /* Contact form */
+    .contact-form input, .contact-form textarea{
+      width:100%;
+      padding:10px;
+      margin-bottom:10px;
+      border-radius:8px;
+      border:1px solid #ddd;
       font-family: inherit;
-      font-size: 14px;
+      font-size:14px;
     }
-
-    .contact-form button {
-      padding: 10px 20px;
-      border-radius: 20px;
-      background: #111;
-      color: #fff;
+    .contact-form button{
+      padding:10px 16px;
+      border-radius:20px;
+      background:#111;
+      color:#fff;
       border: none;
-      cursor: pointer;
-      font-size: 14px;
+      cursor:pointer;
+      font-size:14px;
     }
 
-    .contact-form button:hover {
-      opacity: 0.9;
-    }
+    iframe{ border-radius:8px; border:0; display:block; }
 
-    /* ---------- MOBILE TWEAKS ---------- */
-    @media (max-width: 600px) {
-      .top-header {
-        padding: 8px 12px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-      }
+    footer{ text-align:center; padding:18px 12px; color:#6b7280; font-size:13px; }
 
-      .logo {
-        width: 34px;
-        height: 34px;
-      }
-
-      .brand-name {
-        font-size: 18px;
-      }
-
-      .main-nav {
-        justify-content: flex-start;
-        gap: 10px;
-      }
-
-      .main-nav a {
-        font-size: 13px;
-      }
-
-      .hero {
-        padding: 20px 14px;
-      }
-
-      .hero h2 {
-        font-size: 22px;
-      }
-
-      .hero p {
-        font-size: 14px;
-      }
-
-      .section {
-        padding: 16px 12px;
-      }
-
-      .card {
-        padding: 12px;
-      }
-
-      .playlist-grid a,
-      .links-grid a,
-      .social-links a {
-        font-size: 13px;
-        padding: 7px 10px;
-      }
+    /* ---------- Larger screens (desktop/tablet) ---------- */
+    @media (min-width: 768px){
+      .top-header{ padding:14px 22px; }
+      .logo{ width:40px; height:40px; }
+      .brand-name{ font-size:20px; }
+      .hero{ padding:36px 18px; }
+      .hero h2{ font-size:34px; }
+      .hero p{ font-size:16px; }
+      .page{ padding: 18px; }
+      .card{ padding:18px; border-radius:14px; }
+      .card h2{ font-size:20px; }
+      .playlist-grid{ grid-template-columns: repeat(1, 1fr); }
+      /* if you want 2 columns on larger screens, change above line to:
+         grid-template-columns: repeat(2, 1fr); */
     }
   </style>
 </head>
 <body>
 
-<header class="top-header">
-  <div class="brand">
-  <a href="https://thinkframes.github.io/" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-    <img src="logo transparent.png" alt="Thinkframes Logo" class="logo">
-    <span class="brand-name">Thinkframes</span>
-  </a>
-</div>
-  <nav class="main-nav">
-    <a href="#about">About</a>
-    <a href="#content">Content</a>
-    <a href="#playlists">Playlists</a>
-    <a href="#links">Links</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
-
-<div class="hero">
-  <h2>Welcome to Thinkframes</h2>
-  <p>A place for intelligent ideas, learning, and creative content.</p>
-</div>
-
-<section id="about" class="section">
-  <div class="card">
-    <h2>About Thinkframes</h2>
-    <p>
-      Thinkframes is a knowledge platform focused on:
-    </p>
-    <ul class="light-list">
-      <li>Clear explanations</li>
-      <li>Creative thinking</li>
-      <li>Educational content</li>
-      <li>Science & real-world topics</li>
-    </ul>
-  </div>
-</section>
-
-<section id="content" class="section">
-  <div class="card">
-    <h2>What You Will Find Here</h2>
-    <ul class="feature-list">
-      <li>📘 Simple educational explainers</li>
-      <li>🧠 Logical & critical thinking topics</li>
-      <li>🔬 Science & technology insights</li>
-      <li>🎥 Curated YouTube playlists</li>
-      <li>✅ Practical problem-solving guides</li>
-    </ul>
-  </div>
-</section>
-<div class="section" id="playlists">
-  <div class="card">
-    <h2>YouTube Playlists</h2>
-    <p>Explore all my main playlists from the Thinkframes YouTube channel:</p>
-
-    <div class="playlist-grid">
-      <a href="https://youtube.com/playlist?list=PL_Rg7C44GQjB6cXoZqG9g4fppwc_y3Hxk&si=Hy8Np6ypcdPRPj-M">Playlist 1 – Health Facts in Daily Life</a>
-      <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjDYrp9I98AF_Tlk9pwqyU3e">Playlist 2 – Divine Wisdom Telugu 🔱 Mahabharata & Dharma Truths</a>
-      <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjBzxgunengyRe-LiCtpvSme">Playlist 3 – Biology Explained</a>
-      <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjBSVG0Sx52vtIPOnSjI7qHy">Playlist 4 – Science & Facts Hub | Telugu Shorts</a>
-      <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjAsatZYhQDPDHp0uL4aNwrI">Playlist 5 – PC Solutions Hub | Windows Tips & Fixes</a>
-      <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjBe-EdTF6B1rLk0hsEZNBaK">Playlist 6 – Nokia Nostalgia | Symbian Era Memories</a>
-      <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjBYdIi0POwibPBsHLnvo0EX">Playlist 7 – Mobile Solutions Hub | Android Fix & Tutorials</a>
-    </div>
-  </div>
-</div>
-
-<div class="section" id="contact">
-  <div class="card">
-    <h2>Contact / Comment</h2>
-
-    <!-- Simple mailto-based comment/contact form (no API keys / no errors) -->
-    <form class="contact-form"
-          action="mailto:anugulan248@gmail.com"
-          method="post"
-          enctype="text/plain">
-
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" placeholder="Write your comment or question here..." rows="4" required></textarea>
-
-      <button type="submit">
-        Send
-      </button>
-    </form>
-
-    <hr>
-
-    <p>Email: <a href="mailto:anugulan248@gmail.com">anugulan248@gmail.com</a></p>
-    <p>YouTube: <a href="https://www.youtube.com/@think_frames" target="_blank">Thinkframes Channel</a></p>
-
-    <div class="social-links">
-      <a href="https://www.youtube.com/@think_frames" target="_blank">YouTube</a>
-      <a href="https://www.facebook.com/profile.php?id=100071146036313" target="_blank">Facebook</a>
-    </div>
-  </div>
-</div>
-
-<div class="section">
-  <div class="card">
-    <h2>Latest Content</h2>
-    <p>
-      🔹 <a href="https://youtube.com/shorts/oDlvh82kf7Q?feature=share" target="_blank">
-        Curry + Rice = Only 10g Protein?! 😱 India lo Protein Deficiency Explained
-      </a><br><br>
-
-      🔹 <a href="https://youtube.com/shorts/oFJ3JSh624c?feature=share" target="_blank">
-        ఎంత తిన్నా బలం రావట్లేదా? 😟 Hidden Deficiency Explained in 40 Seconds!
-      </a><br><br>
-
-      🔹 <a href="https://youtube.com/shorts/lmnPhhvuoJ8?feature=share" target="_blank">
-        They Lied About Draupadi 😡 (REAL Mahabharata Facts)
+  <header class="top-header">
+    <div class="brand">
+      <a href="https://thinkframes.github.io/" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="logo transparent.png" alt="Thinkframes Logo" class="logo" />
+        <span class="brand-name">Thinkframes</span>
       </a>
-    </p>
+    </div>
+
+    <nav class="main-nav" aria-label="Main Navigation">
+      <a href="#about">About</a>
+      <a href="#content">Content</a>
+      <a href="#playlists">Playlists</a>
+      <a href="#links">Links</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="hero" role="banner">
+    <div class="page">
+      <h2>Welcome to Thinkframes</h2>
+      <p>A place for intelligent ideas, learning, and creative content.</p>
+    </div>
   </div>
-</div>
 
-<div class="section">
-  <div class="card">
-    <h2>Latest Videos</h2>
-    <iframe width="100%" height="315"
-      src="https://www.youtube.com/embed/AfK-kFzEaIs?si=ROu9FrzsKOoTwGEj"
-      title="YouTube video player"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen>
-    </iframe>
-  </div>
-</div>
+  <main class="page" role="main">
+    <section id="about" class="section">
+      <div class="card">
+        <h2>About Thinkframes</h2>
+        <p>Thinkframes is a knowledge platform focused on:</p>
+        <ul class="light-list">
+          <li>Clear explanations</li>
+          <li>Creative thinking</li>
+          <li>Educational content</li>
+          <li>Science & real-world topics</li>
+        </ul>
+      </div>
+    </section>
 
-<footer>
-  <p>© 2025 Thinkframes | All Rights Reserved</p>
-</footer>
+    <section id="content" class="section">
+      <div class="card">
+        <h2>What You Will Find Here</h2>
+        <ul class="feature-list">
+          <li>📘 Simple educational explainers</li>
+          <li>🧠 Logical & critical thinking topics</li>
+          <li>🔬 Science & technology insights</li>
+          <li>🎥 Curated YouTube playlists</li>
+          <li>✅ Practical problem-solving guides</li>
+        </ul>
+      </div>
+    </section>
 
+    <section id="playlists" class="section">
+      <div class="card">
+        <h2>YouTube Playlists</h2>
+        <p>Explore all my main playlists from the Thinkframes YouTube channel:</p>
+
+        <div class="playlist-grid">
+          <a href="https://youtube.com/playlist?list=PL_Rg7C44GQjB6cXoZqG9g4fppwc_y3Hxk&si=Hy8Np6ypcdPRPj-M" target="_blank" rel="noopener">Playlist 1 – Health Facts in Daily Life</a>
+          <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjDYrp9I98AF_Tlk9pwqyU3e" target="_blank" rel="noopener">Playlist 2 – Divine Wisdom Telugu 🔱 Mahabharata & Dharma Truths</a>
+          <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjBzxgunengyRe-LiCtpvSme" target="_blank" rel="noopener">Playlist 3 – Biology Explained</a>
+          <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjBSVG0Sx52vtIPOnSjI7qHy" target="_blank" rel="noopener">Playlist 4 – Science & Facts Hub | Telugu Shorts</a>
+          <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjAsatZYhQDPDHp0uL4aNwrI" target="_blank" rel="noopener">Playlist 5 – PC Solutions Hub | Windows Tips & Fixes</a>
+          <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjBe-EdTF6B1rLk0hsEZNBaK" target="_blank" rel="noopener">Playlist 6 – Nokia Nostalgia | Symbian Era Memories</a>
+          <a href="https://www.youtube.com/playlist?list=PL_Rg7C44GQjBYdIi0POwibPBsHLnvo0EX" target="_blank" rel="noopener">Playlist 7 – Mobile Solutions Hub | Android Fix & Tutorials</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="links" class="section">
+      <div class="card">
+        <h2>Links & Contacts</h2>
+        <p>Quick links and social channels:</p>
+        <p style="margin:8px 0;">
+          <a href="mailto:anugulan248@gmail.com">anugulan248@gmail.com</a><br>
+          <a href="https://www.youtube.com/@think_frames" target="_blank" rel="noopener">YouTube: Thinkframes Channel</a>
+        </p>
+
+        <div class="social-links">
+          <a href="https://www.youtube.com/@think_frames" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://www.facebook.com/profile.php?id=100071146036313" target="_blank" rel="noopener">Facebook</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="card">
+        <h2>Contact / Comment</h2>
+
+        <form class="contact-form"
+              action="mailto:anugulan248@gmail.com"
+              method="post"
+              enctype="text/plain">
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Your Email" required>
+          <textarea name="message" placeholder="Write your comment or question here..." rows="4" required></textarea>
+          <button type="submit">Send</button>
+        </form>
+
+        <hr style="margin:14px 0;border:none;border-top:1px solid #eee;">
+        <p style="margin:0 0 6px;">Email: <a href="mailto:anugulan248@gmail.com">anugulan248@gmail.com</a></p>
+        <p style="margin:0 0 6px;">YouTube: <a href="https://www.youtube.com/@think_frames" target="_blank" rel="noopener">Thinkframes Channel</a></p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <h2>Latest Content</h2>
+        <p style="margin:0;">
+          🔹 <a href="https://youtube.com/shorts/oDlvh82kf7Q?feature=share" target="_blank" rel="noopener">
+            Curry + Rice = Only 10g Protein?! 😱 India lo Protein Deficiency Explained
+          </a><br><br>
+
+          🔹 <a href="https://youtube.com/shorts/oFJ3JSh624c?feature=share" target="_blank" rel="noopener">
+            ఎంత తిన్నా బలం రావట్లేదా? 😟 Hidden Deficiency Explained in 40 Seconds!
+          </a><br><br>
+
+          🔹 <a href="https://youtube.com/shorts/lmnPhhvuoJ8?feature=share" target="_blank" rel="noopener">
+            They Lied About Draupadi 😡 (REAL Mahabharata Facts)
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <h2>Latest Videos</h2>
+        <iframe width="100%" height="315"
+          src="https://www.youtube.com/embed/AfK-kFzEaIs?si=ROu9FrzsKOoTwGEj"
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Thinkframes | All Rights Reserved</p>
+  </footer>
 </body>
 </html>
