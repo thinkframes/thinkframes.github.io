@@ -199,9 +199,159 @@
       /* if you want 2 columns on larger screens, change above line to:
          grid-template-columns: repeat(2, 1fr); */
     }
+/* ---------- Floating side ribbons (desktop only) ---------- */
+.side-panel {
+  position: fixed;
+  top: 84px;                /* just below header */
+  width: 220px;
+  max-height: calc(100vh - 110px);
+  overflow: auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(10,10,10,0.08);
+  padding: 12px;
+  font-size: 14px;
+  z-index: 120;
+  transition: transform .18s ease, opacity .18s ease;
+}
+
+/* left contents */
+.side-panel.left {
+  left: 18px;
+}
+
+/* right appearance */
+.side-panel.right {
+  right: 18px;
+}
+
+/* small header inside panel */
+.side-panel h3 {
+  margin: 0 0 10px 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+}
+
+/* contents list */
+.ribbons-toc { list-style: none; margin: 0; padding: 0; }
+.ribbons-toc li { margin: 6px 0; }
+.ribbons-toc a {
+  color: #1565c0; text-decoration: none; display: inline-block; padding: 4px 6px; border-radius: 6px;
+}
+.ribbons-toc a:hover { background: #f1f5f9; }
+
+/* appearance controls layout */
+.appear-controls { display: grid; gap: 8px; }
+.appear-controls button, .appear-controls .toggle {
+  padding: 8px 10px; border-radius: 8px; border: 1px solid #e6e6e6; background: #fafafa; cursor: pointer;
+  font-size: 14px;
+}
+.appear-controls .small { padding: 6px 8px; font-size:13px; }
+
+.appear-controls .row { display:flex; gap:8px; align-items:center; }
+
+/* hide ribbons on small screens */
+@media (max-width: 760px) {
+  .side-panel { display: none !important; }
+}
+
+/* subtle collapsed state (if you want toggle) */
+.side-panel.collapsed { transform: translateY(-6px) scale(.98); opacity: .96; }
+
   </style>
 </head>
 <body>
+<script>
+/* ======= Build a simple TOC from H2 headings in <main> ======= */
+(function buildTOC(){
+  const tocRoot = document.getElementById('ribbons-toc');
+  if(!tocRoot) return;
+  // collect h2s inside main
+  const headings = Array.from(document.querySelectorAll('main h2'));
+  if(!headings.length) {
+    tocRoot.innerHTML = '<li style="color:#666;font-size:13px">No sections found</li>';
+    return;
+  }
+  headings.forEach(h=>{
+    // ensure id exists
+    if(!h.id) {
+      h.id = h.textContent.trim().toLowerCase().replace(/[^\w\- ]+/g,'').replace(/\s+/g,'-');
+    }
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = '#'+h.id;
+    a.textContent = h.textContent;
+    a.addEventListener('click', function(e){
+      // smooth scroll with a little offset for sticky header
+      e.preventDefault();
+      const top = document.getElementById(h.id).getBoundingClientRect().top + window.scrollY - 70;
+      window.scrollTo({top, behavior:'smooth'});
+      history.replaceState && history.replaceState(null, '', '#'+h.id);
+    });
+    li.appendChild(a);
+    tocRoot.appendChild(li);
+  });
+})();
+
+/* ======= Appearance controls (font size, width, theme) ======= */
+(function appearanceControls(){
+  const page = document.querySelector('.page');
+  if(!page) return;
+
+  const FONT_KEY = 'tf_font_size';
+  const WIDTH_KEY = 'tf_width_mode';
+  const THEME_KEY = 'tf_theme';
+
+  // helpers
+  const setFont = (size)=> { page.style.fontSize = size + 'px'; localStorage.setItem(FONT_KEY, size); };
+  const setWidth = (mode)=> {
+    if(mode === 'wide') page.style.maxWidth = '1100px';
+    else page.style.maxWidth = '960px';
+    localStorage.setItem(WIDTH_KEY, mode);
+  };
+  const setTheme = (mode)=> {
+    if(mode === 'dark') {
+      document.documentElement.style.background = '#0b0b0b';
+      document.documentElement.style.color = '#eee';
+      document.querySelectorAll('.card').forEach(c=> c.style.background = '#0f1113');
+      localStorage.setItem(THEME_KEY,'dark');
+    } else {
+      document.documentElement.style.background = '';
+      document.documentElement.style.color = '';
+      document.querySelectorAll('.card').forEach(c=> c.style.background = '');
+      localStorage.setItem(THEME_KEY,'light');
+    }
+  };
+
+  // restore saved
+  const savedFont = parseInt(localStorage.getItem(FONT_KEY) || '0',10);
+  if(savedFont) setFont(savedFont);
+  const savedWidth = localStorage.getItem(WIDTH_KEY) || 'normal';
+  setWidth(savedWidth === 'wide' ? 'wide' : 'normal');
+  const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
+  setTheme(savedTheme);
+
+  // wire buttons
+  document.getElementById('font-increase').addEventListener('click', ()=> {
+    const cur = parseInt(getComputedStyle(page).fontSize) || 15;
+    const next = Math.min(cur+1, 20); setFont(next);
+  });
+  document.getElementById('font-decrease').addEventListener('click', ()=> {
+    const cur = parseInt(getComputedStyle(page).fontSize) || 15;
+    const next = Math.max(cur-1, 12); setFont(next);
+  });
+  document.getElementById('font-reset').addEventListener('click', ()=> { setFont(15); });
+
+  document.getElementById('width-normal').addEventListener('click', ()=> setWidth('normal'));
+  document.getElementById('width-wide').addEventListener('click', ()=> setWidth('wide'));
+
+  document.getElementById('theme-toggle').addEventListener('click', ()=> {
+    const cur = localStorage.getItem(THEME_KEY) || 'light';
+    setTheme(cur === 'light' ? 'dark' : 'light');
+  });
+})();
+</script>
 
   <header class="top-header">
     <div class="brand">
